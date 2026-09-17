@@ -1,0 +1,5 @@
+Lab 1 Setup Verification
+Node.js version: v24.20.0
+npm version: 11.9.0
+Git version: 2.55.0
+Feature branch: setup/app-shell
