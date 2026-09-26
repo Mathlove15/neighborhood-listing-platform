@@ -11,3 +11,26 @@
 1. Gemini provided a more technical explanation. It discussed Server Components, pre-rendering, backend APIs, and how search engines index property information. ChatGPT focused more on page organization and navigation using simpler language.
 
 2. ChatGPT emphasized visual design and responsiveness by discussing buttons, menus, filters, and layouts for desktops, tablets, and phones. Gemini placed greater emphasis on performance, SEO, and preventing property-data errors.
+
+
+## Lab 2: TypeScript Interface Consultation
+
+- **Date:** September 25, 2026
+- **Tool:** Google AI Studio — Gemini 3.7 Flash
+- **Purpose:** Generate typed data blueprints for property listings and sponsors.
+
+### Prompt
+
+Create TypeScript interfaces only for a neighborhood property listing application.
+
+Create a `Property` interface with these required fields: `id`, `title`, `address`, `price`, `facts`, `imageUrl`, `imageAlt`, and `href`. Include `badge` as an optional field.
+
+Create a `Sponsor` interface with these required fields: `id`, `name`, `imageUrl`, `imageAlt`, and `href`. Include `tagline` as an optional field.
+
+Return only the TypeScript interfaces. Do not create React components, JSX, functions, sample data, or explanations.
+
+### Response and Evaluation
+
+Gemini returned `Property` and `Sponsor` interfaces with the requested field types. It used `string[]` for the property facts, `number` for the price, and question marks for the optional `badge` and `tagline` fields.
+
+I reviewed the response and confirmed that all required and optional fields were correct. I then added the reviewed interfaces to `src/types/index.ts`. I did not use Gemini to create the React components or sample data.
