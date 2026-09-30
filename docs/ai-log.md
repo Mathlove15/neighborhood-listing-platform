@@ -34,3 +34,19 @@ Return only the TypeScript interfaces. Do not create React components, JSX, func
 Gemini returned `Property` and `Sponsor` interfaces with the requested field types. It used `string[]` for the property facts, `number` for the price, and question marks for the optional `badge` and `tagline` fields.
 
 I reviewed the response and confirmed that all required and optional fields were correct. I then added the reviewed interfaces to `src/types/index.ts`. I did not use Gemini to create the React components or sample data.
+
+## Lab 2: Reusable Components and Page Assembly
+
+- **Date:** September 29, 2026
+- **Tool:** ChatGPT
+- **Purpose:** Create and explain reusable interface components and assemble the property-listing page.
+
+### Prompt Summary
+
+I asked ChatGPT to guide me step by step while creating a reusable `PropertyCard`, a reusable `SponsorBanner`, search filters, three sample property listings, responsive layouts, and accessibility features. I also asked for explanations of the code and Git commands in beginner-friendly language.
+
+### Response and Evaluation
+
+ChatGPT suggested TypeScript and React code for `PropertyCard.tsx`, `SponsorBanner.tsx`, `SearchFilters.tsx`, and `page.tsx`. It also explained the component structure, terminal commands, Git staging, commits, and local testing.
+
+I reviewed the suggested code, saved each file, ran `npm run lint`, and tested the website at `http://localhost:3000`. The lint check passed, and I visually confirmed that the search controls, three property cards, sponsor banner, responsive layout, and accessibility section appeared on the page.
