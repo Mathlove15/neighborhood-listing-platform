@@ -35,3 +35,12 @@ npm run dev
 ```
 
 Then open `http://localhost:3000` in a browser.
+## Lab 2 Component Hierarchy
+
+- Page
+  - SearchFilters
+  - ListingGrid
+    - PropertyCard
+    - PropertyCard
+    - PropertyCard
+  - SponsorBanner
