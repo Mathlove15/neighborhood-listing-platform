@@ -50,3 +50,29 @@ I asked ChatGPT to guide me step by step while creating a reusable `PropertyCard
 ChatGPT suggested TypeScript and React code for `PropertyCard.tsx`, `SponsorBanner.tsx`, `SearchFilters.tsx`, and `page.tsx`. It also explained the component structure, terminal commands, Git staging, commits, and local testing.
 
 I reviewed the suggested code, saved each file, ran `npm run lint`, and tested the website at `http://localhost:3000`. The lint check passed, and I visually confirmed that the search controls, three property cards, sponsor banner, responsive layout, and accessibility section appeared on the page.
+
+## Accessibility and Responsive Verification
+
+**Date:** October 1, 2026  
+**Website:** https://neighborhood-listing-platform-vert.vercel.app
+
+### Keyboard Testing
+
+- Tab moved forward through the form controls and property links in a logical order.
+- Shift + Tab moved backward through the same controls.
+- Return and Space activated the Search button.
+- A visible focus outline showed which item was selected.
+- No keyboard-accessibility failures were observed.
+
+### Lighthouse Accessibility Test
+
+- Tested the deployed website with Chrome Lighthouse in an Incognito window.
+- Accessibility score: 100.
+- Lighthouse reported no automated accessibility issues.
+
+### Responsive Layout Testing
+
+- 375 pixels: one-column layout displayed correctly.
+- 768 pixels: two-column layout displayed correctly.
+- 1280 pixels: three-column layout displayed correctly.
+- No horizontal overflow or cut-off content was observed.
