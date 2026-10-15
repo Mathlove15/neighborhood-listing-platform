@@ -76,3 +76,10 @@ I reviewed the suggested code, saved each file, ran `npm run lint`, and tested t
 - 768 pixels: two-column layout displayed correctly.
 - 1280 pixels: three-column layout displayed correctly.
 - No horizontal overflow or cut-off content was observed.
+
+## Synthetic Data Generation
+
+- **Tool:** Google AI Studio (Gemini Flash Latest)
+- **Method:** Structured Output using JSON Schema (`schemas/property.schema.json`) wrapped in an object root.
+- **Output:** 5 valid fictional California property records saved to `data/generated/properties.json`.
+- **Note:** Data is strictly synthetic for development and runtime validation testing.
