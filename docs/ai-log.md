@@ -98,3 +98,9 @@ I reviewed the suggested code, saved each file, ran `npm run lint`, and tested t
 - **Rationale:** 
   - Generates static TypeScript types and runtime validation rules from one unified definition, preventing drift between compile-time checks and incoming JSON payloads.
   - Matches the existing `schemas/property.schema.json` contract (enforcing regex patterns, enum values, and nested address objects) while integrating seamlessly with Next.js components.
+
+  ## Step 10: Component Integration and Fail-Safe Rendering
+
+- **Integration:** Replaced hardcoded listing items in `src/app/page.tsx` with dynamic records from `data/generated/properties.json`.
+- **Validation Pipeline:** Each record is validated against `PropertySchema.safeParse()` at runtime. Valid items are mapped to the UI `Property` type required by `<PropertyCard />`.
+- **Fail-Safe Mechanism:** Any record failing schema parsing logs a structured warning (`console.warn`) and returns `null`, preventing malformed items from breaking the page render or throwing unhandled runtime exceptions. An empty-state fallback UI renders if zero valid items exist.
