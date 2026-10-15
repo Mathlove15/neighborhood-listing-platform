@@ -91,3 +91,10 @@ I reviewed the suggested code, saved each file, ran `npm run lint`, and tested t
 - **Pattern Failures (`property_id` and `sponsor_id` regex):** Fixed at the **Prompt/Generation Layer** by aligning ID formats to `^PROP-[0-9]{3}$` and `^SPON-[0-9]{3}$`.
 - **Nested Object Requirement (`address`):** Fixed at the **Prompt/Generation Layer** by nesting `street`, `city`, and `state` objects rather than top-level strings.
 - **URI Format Plugin:** Handled at the **Tooling Layer** by providing `-c ajv-formats` to Ajv Draft 2020.
+
+## Step 9: TypeScript Type Strategy and Single Source of Truth
+
+- **Decision:** Adopted a single Zod source of truth (`src/types/property.ts`) with inferred TypeScript types (`z.infer<typeof PropertySchema>`).
+- **Rationale:** 
+  - Generates static TypeScript types and runtime validation rules from one unified definition, preventing drift between compile-time checks and incoming JSON payloads.
+  - Matches the existing `schemas/property.schema.json` contract (enforcing regex patterns, enum values, and nested address objects) while integrating seamlessly with Next.js components.
