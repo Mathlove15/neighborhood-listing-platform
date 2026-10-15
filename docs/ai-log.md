@@ -83,3 +83,11 @@ I reviewed the suggested code, saved each file, ran `npm run lint`, and tested t
 - **Method:** Structured Output using JSON Schema (`schemas/property.schema.json`) wrapped in an object root.
 - **Output:** 5 valid fictional California property records saved to `data/generated/properties.json`.
 - **Note:** Data is strictly synthetic for development and runtime validation testing.
+
+## Step 8: Validation Fixes and Layer Explanations
+
+- **Root Structure Mismatch (`type: object` vs `array`):** Fixed at the **Data Generation Layer** by standardizing the generated output into discrete property records conforming directly to the entity schema.
+- **Unexpected Property (`title` rejected by `additionalProperties: false`):** Fixed at the **Data Generation Layer** by omitting fields absent from the contract.
+- **Pattern Failures (`property_id` and `sponsor_id` regex):** Fixed at the **Prompt/Generation Layer** by aligning ID formats to `^PROP-[0-9]{3}$` and `^SPON-[0-9]{3}$`.
+- **Nested Object Requirement (`address`):** Fixed at the **Prompt/Generation Layer** by nesting `street`, `city`, and `state` objects rather than top-level strings.
+- **URI Format Plugin:** Handled at the **Tooling Layer** by providing `-c ajv-formats` to Ajv Draft 2020.
