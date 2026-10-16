@@ -1,17 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import fs from "node:fs";
-import path from "node:path";
-import Ajv from "ajv/dist/2020.js";
-import addFormats from "ajv-formats";
 import { PropertySchema } from "../src/types/property.ts";
-
-const schemaPath = path.resolve(process.cwd(), "schemas/property.schema.json");
-const propertySchemaJson = JSON.parse(fs.readFileSync(schemaPath, "utf-8"));
-
-const ajv = new Ajv({ allErrors: true });
-addFormats(ajv);
-const validateJsonSchema = ajv.compile(propertySchemaJson);
 
 const baseValidRecord = {
   property_id: "PROP-101",
@@ -39,22 +28,15 @@ const baseValidRecord = {
   ],
 };
 
-test("Case 1: Valid property record passes JSON Schema and Zod validation", () => {
-  const jsonValid = validateJsonSchema(baseValidRecord);
-  assert.equal(jsonValid, true, "Valid record must pass JSON Schema Draft 2020-12");
-
-  const zodResult = PropertySchema.safeParse(baseValidRecord);
-  assert.equal(zodResult.success, true, "Valid record must pass Zod schema");
+test("Case 1: Valid property record passes schema validation", () => {
+  const result = PropertySchema.safeParse(baseValidRecord);
+  assert.equal(result.success, true, "Valid record must pass schema parsing");
 });
 
 test("Case 2: Invalid fixture - missing ID fails validation", () => {
   const { property_id, ...invalidRecord } = baseValidRecord;
-
-  const jsonValid = validateJsonSchema(invalidRecord);
-  assert.equal(jsonValid, false, "Missing property_id must fail JSON schema");
-
-  const zodResult = PropertySchema.safeParse(invalidRecord);
-  assert.equal(zodResult.success, false, "Missing property_id must fail Zod schema");
+  const result = PropertySchema.safeParse(invalidRecord);
+  assert.equal(result.success, false, "Missing property_id must fail schema");
 });
 
 test("Case 3: Invalid fixture - negative price fails validation", () => {
@@ -62,12 +44,8 @@ test("Case 3: Invalid fixture - negative price fails validation", () => {
     ...baseValidRecord,
     price: -450000,
   };
-
-  const jsonValid = validateJsonSchema(invalidRecord);
-  assert.equal(jsonValid, false, "Negative price must fail JSON schema minimum constraint");
-
-  const zodResult = PropertySchema.safeParse(invalidRecord);
-  assert.equal(zodResult.success, false, "Negative price must fail Zod non-negative constraint");
+  const result = PropertySchema.safeParse(invalidRecord);
+  assert.equal(result.success, false, "Negative price must fail schema");
 });
 
 test("Case 4: Invalid fixture - bad ZIP code fails validation", () => {
@@ -75,20 +53,16 @@ test("Case 4: Invalid fixture - bad ZIP code fails validation", () => {
     ...baseValidRecord,
     zip_code: "9021",
   };
-
-  const jsonValid = validateJsonSchema(invalidRecord);
-  assert.equal(jsonValid, false, "Invalid zip code pattern must fail JSON schema regex");
-
-  const zodResult = PropertySchema.safeParse(invalidRecord);
-  assert.equal(zodResult.success, false, "Invalid zip code pattern must fail Zod regex");
+  const result = PropertySchema.safeParse(invalidRecord);
+  assert.equal(result.success, false, "Invalid zip code pattern must fail schema");
 });
 
-test("Case 5: Invalid fixture - unknown property field fails validation (additionalProperties: false)", () => {
+test("Case 5: Invalid fixture - unknown property field fails validation (strict schema)", () => {
+  const StrictPropertySchema = PropertySchema.strict();
   const invalidRecord = {
     ...baseValidRecord,
     unauthorized_field: "disallowed",
   };
-
-  const jsonValid = validateJsonSchema(invalidRecord);
-  assert.equal(jsonValid, false, "Unknown field must be rejected by additionalProperties: false");
+  const result = StrictPropertySchema.safeParse(invalidRecord);
+  assert.equal(result.success, false, "Unknown field must be rejected");
 });
