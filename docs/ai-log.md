@@ -104,3 +104,10 @@ I reviewed the suggested code, saved each file, ran `npm run lint`, and tested t
 - **Integration:** Replaced hardcoded listing items in `src/app/page.tsx` with dynamic records from `data/generated/properties.json`.
 - **Validation Pipeline:** Each record is validated against `PropertySchema.safeParse()` at runtime. Valid items are mapped to the UI `Property` type required by `<PropertyCard />`.
 - **Fail-Safe Mechanism:** Any record failing schema parsing logs a structured warning (`console.warn`) and returns `null`, preventing malformed items from breaking the page render or throwing unhandled runtime exceptions. An empty-state fallback UI renders if zero valid items exist.
+
+## 2026-10-16 - Step 14: Peer Review Handoff & Contract Merge
+
+- **PR:** Opened Pull Request #5 (`feat(contract): implement dual-layer schema validation, test suite, and ADR`).
+- **Peer Review Sign-off:** Received verification review from peer reviewer (`dianamoranm`) confirming JSON Schema compliance, runtime Zod validation, test coverage (5/5 passing), and ADR 001 architecture documentation.
+- **Normalization Review:** Evaluated amenity representations (free text vs controlled enum vs join table); consolidated amenities to controlled enum values across schema and Zod types.
+- **Merge & Sync:** Merged PR #5 into `main` and fast-forwarded local `main` branch. All tests pass on `main`.
