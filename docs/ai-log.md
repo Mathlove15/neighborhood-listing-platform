@@ -76,3 +76,31 @@ I reviewed the suggested code, saved each file, ran `npm run lint`, and tested t
 - 768 pixels: two-column layout displayed correctly.
 - 1280 pixels: three-column layout displayed correctly.
 - No horizontal overflow or cut-off content was observed.
+
+## Synthetic Data Generation
+
+- **Tool:** Google AI Studio (Gemini Flash Latest)
+- **Method:** Structured Output using JSON Schema (`schemas/property.schema.json`) wrapped in an object root.
+- **Output:** 5 valid fictional California property records saved to `data/generated/properties.json`.
+- **Note:** Data is strictly synthetic for development and runtime validation testing.
+
+## Step 8: Validation Fixes and Layer Explanations
+
+- **Root Structure Mismatch (`type: object` vs `array`):** Fixed at the **Data Generation Layer** by standardizing the generated output into discrete property records conforming directly to the entity schema.
+- **Unexpected Property (`title` rejected by `additionalProperties: false`):** Fixed at the **Data Generation Layer** by omitting fields absent from the contract.
+- **Pattern Failures (`property_id` and `sponsor_id` regex):** Fixed at the **Prompt/Generation Layer** by aligning ID formats to `^PROP-[0-9]{3}$` and `^SPON-[0-9]{3}$`.
+- **Nested Object Requirement (`address`):** Fixed at the **Prompt/Generation Layer** by nesting `street`, `city`, and `state` objects rather than top-level strings.
+- **URI Format Plugin:** Handled at the **Tooling Layer** by providing `-c ajv-formats` to Ajv Draft 2020.
+
+## Step 9: TypeScript Type Strategy and Single Source of Truth
+
+- **Decision:** Adopted a single Zod source of truth (`src/types/property.ts`) with inferred TypeScript types (`z.infer<typeof PropertySchema>`).
+- **Rationale:** 
+  - Generates static TypeScript types and runtime validation rules from one unified definition, preventing drift between compile-time checks and incoming JSON payloads.
+  - Matches the existing `schemas/property.schema.json` contract (enforcing regex patterns, enum values, and nested address objects) while integrating seamlessly with Next.js components.
+
+  ## Step 10: Component Integration and Fail-Safe Rendering
+
+- **Integration:** Replaced hardcoded listing items in `src/app/page.tsx` with dynamic records from `data/generated/properties.json`.
+- **Validation Pipeline:** Each record is validated against `PropertySchema.safeParse()` at runtime. Valid items are mapped to the UI `Property` type required by `<PropertyCard />`.
+- **Fail-Safe Mechanism:** Any record failing schema parsing logs a structured warning (`console.warn`) and returns `null`, preventing malformed items from breaking the page render or throwing unhandled runtime exceptions. An empty-state fallback UI renders if zero valid items exist.

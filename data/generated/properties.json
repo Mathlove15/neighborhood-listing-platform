@@ -1,0 +1,110 @@
+[
+  {
+    "property_id": "PROP-001",
+    "description": "Stunning contemporary estate offering panoramic city views and upscale designer finishes throughout.",
+    "property_type": "house",
+    "listing_status": "available",
+    "price": 3450000,
+    "bedrooms": 4,
+    "bathrooms": 4.5,
+    "square_feet": 3850,
+    "address": {
+      "street": "1248 Loma Vista Drive",
+      "city": "Beverly Hills",
+      "state": "CA"
+    },
+    "zip_code": "90210",
+    "image_url": "https://images.example.com/properties/prop_ca_001.jpg",
+    "amenities": ["Infinity Pool", "Smart Home Automation", "Wine Cellar", "Three-Car Garage"],
+    "local_sponsors": [
+      { "sponsor_id": "SPON-101", "placement": "property_card", "is_featured": true },
+      { "sponsor_id": "SPON-102", "placement": "detail_page", "is_featured": false }
+    ]
+  },
+  {
+    "property_id": "PROP-002",
+    "description": "Open-concept industrial-style loft featuring exposed brick, soaring ceilings, and transit access.",
+    "property_type": "condominium",
+    "listing_status": "available",
+    "price": 1150000,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "square_feet": 1280,
+    "address": {
+      "street": "450 Townsend Street Unit 4B",
+      "city": "San Francisco",
+      "state": "CA"
+    },
+    "zip_code": "94107",
+    "image_url": "https://images.example.com/properties/prop_ca_002.jpg",
+    "amenities": ["Rooftop Deck", "EV Charging Station", "Exposed Brick", "Fitness Center"],
+    "local_sponsors": [
+      { "sponsor_id": "SPON-201", "placement": "detail_page", "is_featured": true }
+    ]
+  },
+  {
+    "property_id": "PROP-003",
+    "description": "Bright coastal unit located walking distance from the harbor, restaurants, and downtown attractions.",
+    "property_type": "condominium",
+    "listing_status": "pending",
+    "price": 875000,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "square_feet": 1120,
+    "address": {
+      "street": "330 J Street Unit 802",
+      "city": "San Diego",
+      "state": "CA"
+    },
+    "zip_code": "92101",
+    "image_url": "https://images.example.com/properties/prop_ca_003.jpg",
+    "amenities": ["Private Balcony", "Concierge Service", "Heated Pool", "Walk-in Closets"],
+    "local_sponsors": [
+      { "sponsor_id": "SPON-301", "placement": "voice_response", "is_featured": false },
+      { "sponsor_id": "SPON-302", "placement": "property_card", "is_featured": true }
+    ]
+  },
+  {
+    "property_id": "PROP-004",
+    "description": "Charming historical home featuring original woodwork, a deep front porch, and modern kitchen updates.",
+    "property_type": "house",
+    "listing_status": "available",
+    "price": 1420000,
+    "bedrooms": 3,
+    "bathrooms": 2.5,
+    "square_feet": 2150,
+    "address": {
+      "street": "685 East Orange Grove Boulevard",
+      "city": "Pasadena",
+      "state": "CA"
+    },
+    "zip_code": "91101",
+    "image_url": "https://images.example.com/properties/prop_ca_004.jpg",
+    "amenities": ["Hardwood Floors", "Covered Front Porch", "Detached Workshop", "Drought-Tolerant Landscaping"],
+    "local_sponsors": [
+      { "sponsor_id": "SPON-401", "placement": "detail_page", "is_featured": false }
+    ]
+  },
+  {
+    "property_id": "PROP-005",
+    "description": "Classic architecture paired with an updated chef kitchen, tall windows, and spacious backyard patio.",
+    "property_type": "townhouse",
+    "listing_status": "sold",
+    "price": 799000,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "square_feet": 1890,
+    "address": {
+      "street": "1822 21st Street",
+      "city": "Sacramento",
+      "state": "CA"
+    },
+    "zip_code": "95814",
+    "image_url": "https://images.example.com/properties/prop_ca_005.jpg",
+    "amenities": ["Original Crown Molding", "Updated Chefs Kitchen", "Fenced Backyard", "Basement Storage"],
+    "local_sponsors": [
+      { "sponsor_id": "SPON-501", "placement": "property_card", "is_featured": false },
+      { "sponsor_id": "SPON-502", "placement": "voice_response", "is_featured": true }
+    ]
+  }
+]

@@ -18,3 +18,5 @@ export interface Sponsor {
   href: string;
   tagline?: string;
 }
+
+export * from "./property";
