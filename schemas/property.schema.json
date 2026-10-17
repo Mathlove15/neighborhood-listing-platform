@@ -101,7 +101,15 @@
       "uniqueItems": true,
       "items": {
         "type": "string",
-        "minLength": 2
+        "enum": [
+          "Solar Panels",
+          "EV Charger",
+          "Rooftop Deck",
+          "Central AC",
+          "In-unit Laundry",
+          "Swimming Pool",
+          "Attached Garage"
+        ]
       }
     },
     "local_sponsors": {

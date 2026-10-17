@@ -24,7 +24,17 @@ export const PropertySchema = z.object({
   address: AddressSchema,
   zip_code: z.string().regex(/^[0-9]{5}$/),
   image_url: z.string().url(),
-  amenities: z.array(z.string()).min(1),
+ amenities: z.array(
+      z.enum([
+        "Solar Panels",
+        "EV Charger",
+        "Rooftop Deck",
+        "Central AC",
+        "In-unit Laundry",
+        "Swimming Pool",
+        "Attached Garage",
+      ])
+    ).min(1),
   local_sponsors: z.array(LocalSponsorSchema).min(1),
 });
 
