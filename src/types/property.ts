@@ -16,7 +16,7 @@ export const PropertySchema = z.object({
   property_id: z.string().regex(/^PROP-[0-9]{3}$/),
   description: z.string().min(10),
   property_type: z.enum(["house", "condominium", "townhouse", "apartment"]),
-  listing_status: z.enum(["available", "pending", "sold"]),
+  listing_status: z.enum(["draft","available", "pending", "sold"]),
   price: z.number().nonnegative(),
   bedrooms: z.number().int().nonnegative(),
   bathrooms: z.number().nonnegative(),

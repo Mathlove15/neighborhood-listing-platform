@@ -66,3 +66,13 @@ test("Case 5: Invalid fixture - unknown property field fails validation (strict 
   const result = StrictPropertySchema.safeParse(invalidRecord);
   assert.equal(result.success, false, "Unknown field must be rejected");
 });
+test("Case 6: Valid listing with draft status passes validation", () => {
+  const draftProperty = {
+    ...baseValidRecord,
+    property_id: "PROP-999",
+    listing_status: "draft",
+  };
+
+  const result = PropertySchema.safeParse(draftProperty);
+  assert.strictEqual(result.success, true);
+});
