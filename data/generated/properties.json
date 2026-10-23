@@ -15,7 +15,7 @@
     },
     "zip_code": "90210",
     "image_url": "https://images.example.com/properties/prop_ca_001.jpg",
-    "amenities": ["Infinity Pool", "Smart Home Automation", "Wine Cellar", "Three-Car Garage"],
+    "amenities": ["Swimming Pool"],
     "local_sponsors": [
       { "sponsor_id": "SPON-101", "placement": "property_card", "is_featured": true },
       { "sponsor_id": "SPON-102", "placement": "detail_page", "is_featured": false }
@@ -37,7 +37,7 @@
     },
     "zip_code": "94107",
     "image_url": "https://images.example.com/properties/prop_ca_002.jpg",
-    "amenities": ["Rooftop Deck", "EV Charging Station", "Exposed Brick", "Fitness Center"],
+   "amenities": ["Rooftop Deck", "EV Charger"],
     "local_sponsors": [
       { "sponsor_id": "SPON-201", "placement": "detail_page", "is_featured": true }
     ]
@@ -58,7 +58,7 @@
     },
     "zip_code": "92101",
     "image_url": "https://images.example.com/properties/prop_ca_003.jpg",
-    "amenities": ["Private Balcony", "Concierge Service", "Heated Pool", "Walk-in Closets"],
+    "amenities": ["Swimming Pool"],
     "local_sponsors": [
       { "sponsor_id": "SPON-301", "placement": "voice_response", "is_featured": false },
       { "sponsor_id": "SPON-302", "placement": "property_card", "is_featured": true }
@@ -80,7 +80,7 @@
     },
     "zip_code": "91101",
     "image_url": "https://images.example.com/properties/prop_ca_004.jpg",
-    "amenities": ["Hardwood Floors", "Covered Front Porch", "Detached Workshop", "Drought-Tolerant Landscaping"],
+    "amenities": ["Central AC"],
     "local_sponsors": [
       { "sponsor_id": "SPON-401", "placement": "detail_page", "is_featured": false }
     ]
@@ -101,7 +101,7 @@
     },
     "zip_code": "95814",
     "image_url": "https://images.example.com/properties/prop_ca_005.jpg",
-    "amenities": ["Original Crown Molding", "Updated Chefs Kitchen", "Fenced Backyard", "Basement Storage"],
+    "amenities": ["In-unit Laundry"],
     "local_sponsors": [
       { "sponsor_id": "SPON-501", "placement": "property_card", "is_featured": false },
       { "sponsor_id": "SPON-502", "placement": "voice_response", "is_featured": true }
