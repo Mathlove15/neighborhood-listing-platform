@@ -9,11 +9,11 @@ The following stories are committed for the Week 8 release and tracked in the `R
 - **US-01: Save property listing as draft (P1 | M)**
   - Allows listers to save property forms locally before formal submission.
 - **US-02: Review property listings before publication (P1 | M)**
-  - Provides a pre-submission review step to prevent publication errors.
+    - Allows an authorized reviewer to approve submitted listings or return them for corrections before publication.
 - **US-04: Mobile responsive listing view with 44px touch targets (P1 | S)**
   - Ensures mobile usability adhering to accessibility target standards.
 - **US-06: Sponsor ad card template (P1 | S)**
-  - Renders designated local sponsor cards alongside listings.
+   - Allows sponsors to enter business details and promo codes into a structured template that generates an ad card.
 - **US-07: Preview sponsor promotional card (P1 | S)**
   - Enables local businesses to verify promotion details and promo codes before submitting.
 - **US-08: Filter listings by price and neighborhood (P1 | M)**
