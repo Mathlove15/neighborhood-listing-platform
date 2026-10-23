@@ -4,7 +4,7 @@ import SponsorBanner from "@/components/SponsorBanner";
 import type { Property, Sponsor } from "@/types";
 import { PropertySchema } from "@/types/property";
 import rawPropertiesData from "../../data/generated/properties.json";
-
+import ListingDraftForm from "@/components/ListingDraftForm";
 const sponsor: Sponsor = {
   id: "spon-01",
   name: "Bay Area First Financial",
@@ -86,7 +86,7 @@ export default function Home() {
           </div>
         )}
       </section>
-
+<ListingDraftForm />
       <section className="mt-12" id="sponsor">
         <SponsorBanner sponsor={sponsor} />
       </section>
