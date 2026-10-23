@@ -111,3 +111,37 @@ I reviewed the suggested code, saved each file, ran `npm run lint`, and tested t
 - **Peer Review Sign-off:** Received verification review from peer reviewer (`dianamoranm`) confirming JSON Schema compliance, runtime Zod validation, test coverage (5/5 passing), and ADR 001 architecture documentation.
 - **Normalization Review:** Evaluated amenity representations (free text vs controlled enum vs join table); consolidated amenities to controlled enum values across schema and Zod types.
 - **Merge & Sync:** Merged PR #5 into `main` and fast-forwarded local `main` branch. All tests pass on `main`.
+
+## Lab 4: Discovery, Requirements, and MVP Planning
+
+- **Date:** October 23, 2026
+- **Author:** Charles Braden
+- **Tools:** Google Gemini and ChatGPT
+- **Context:** Fictional scenarios and simulated stakeholder information were used as permitted by the assignment.
+
+### Prompt Summary
+
+I used Gemini to help prepare discovery and requirements drafts. I asked ChatGPT to review the work and guide me through user stories, acceptance criteria, GitHub issues, priorities, estimates, the project board, MVP scope, implementation, testing, and peer review.
+
+### Output Used and Changes Made
+
+- Organized eight user stories with priorities, size estimates, and project statuses.
+- Revised user stories and acceptance criteria for listing review, sponsor cards, sponsor previews, and listing filters.
+- Documented the Week 8 MVP scope in `docs/mvp-plan.md`.
+- Added draft listing status, an automated test, and a browser-based form that saves drafts in localStorage.
+- Corrected sample amenities to match the schema's allowed values.
+
+### Human Review and Verification
+
+I reviewed and applied the changes, ran `npm test` with six passing tests, and ran `npm run build` successfully. I checked that the five fictional listings displayed and confirmed that a saved draft remained after refreshing the deployed preview.
+
+AhmedFarah24 reviewed and approved PR #15. I merged the PR and updated my local main branch.
+
+### Limitations and Corrections
+
+Drafts are saved locally in the browser. Sample property image URLs remain placeholders, so those photos do not load. I corrected earlier story wording and invalid amenity values rather than keeping those suggestions unchanged.
+
+### Related Evidence
+
+- PR: https://github.com/Mathlove15/neighborhood-listing-platform/pull/15
+- MVP plan: `docs/mvp-plan.md`
