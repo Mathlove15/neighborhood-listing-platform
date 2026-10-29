@@ -145,3 +145,19 @@ Drafts are saved locally in the browser. Sample property image URLs remain place
 
 - PR: https://github.com/Mathlove15/neighborhood-listing-platform/pull/15
 - MVP plan: `docs/mvp-plan.md`
+
+## Midterm Practical — October 29, 2026
+
+Tool: ChatGPT.
+Exact user prompt: "Lets do whats do by 2:55"
+Goal: Prepare the required in-class progress submission.
+
+| Step / Tool | Prompt Summary | Model Output Used | Model Output Rejected & Rationale | Verification Method | Associated Git Commit |
+| --- | --- | --- | --- | --- | --- |
+| Repository access / ChatGPT | Guide me through the midterm setup. | Opened repository collaborator settings. | None. | GitHub shows pdt605 has a pending invitation; acceptance is not yet confirmed. | Not applicable: GitHub setting. |
+| Branch setup / ChatGPT | Prepare the progress check. | Saved unfinished Lab 5 changes with git stash and created exam/practical-persistence-eval. | None. | Terminal confirmed the stash was saved and the exam branch was created. | Pending. |
+| Environment hygiene / ChatGPT | Review the uploaded .gitignore screenshot. | Kept existing environment exclusions and added dist/. | None. | Reviewed .gitignore and git status; no credential files appeared in the status output. | Pending. |
+
+### Remaining Work
+
+Requirements, exam migration, access policies, security tests, API validation, and accessible UI still require implementation or verification against the exam instructions. No exam test results are claimed yet.
