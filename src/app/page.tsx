@@ -1,10 +1,12 @@
 import PropertyCard from "@/components/PropertyCard";
 import SearchFilters from "@/components/SearchFilters";
 import SponsorBanner from "@/components/SponsorBanner";
-import type { Property, Sponsor } from "@/types";
-import { PropertySchema } from "@/types/property";
-import rawPropertiesData from "../../data/generated/properties.json";
 import ListingDraftForm from "@/components/ListingDraftForm";
+import { createSupabaseServer } from "@/lib/supabaseServer";
+import type { Property, Sponsor } from "@/types";
+
+export const dynamic = "force-dynamic";
+
 const sponsor: Sponsor = {
   id: "spon-01",
   name: "Bay Area First Financial",
@@ -14,45 +16,50 @@ const sponsor: Sponsor = {
   tagline: "Helping families find home financing that fits.",
 };
 
-// Safe runtime validation: validate each item and filter out invalid records
-const validatedProperties: Property[] = rawPropertiesData
-  .map((rawItem, index) => {
-    const parseResult = PropertySchema.safeParse(rawItem);
-    if (!parseResult.success) {
-      console.warn(`Record #${index + 1} failed schema validation:`, parseResult.error.format());
-      return null;
+export default async function Home() {
+  let properties: Property[] = [];
+  let loadFailed = false;
+
+  try {
+    const supabase = createSupabaseServer();
+
+    const { data, error } = await supabase
+      .from("properties")
+      .select("id,address,price,bedrooms,bathrooms,square_feet")
+      .eq("status", "approved")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      loadFailed = true;
+    } else {
+      properties = (data ?? []).map((item) => ({
+        id: item.id,
+        title: item.address,
+        address: item.address,
+        price: Number(item.price),
+        facts: [
+          `${item.bedrooms} bedrooms`,
+          `${item.bathrooms} bathrooms`,
+          `${Number(item.square_feet).toLocaleString("en-US")} sq. ft.`,
+        ],
+        imageUrl: "/window.svg",
+        imageAlt: "Illustration of a window",
+        href: `#${item.id}`,
+        badge: "APPROVED",
+      }));
     }
+  } catch {
+    loadFailed = true;
+  }
 
-    const item = parseResult.data;
-    const formattedAddress = `${item.address.street}, ${item.address.city}, ${item.address.state} ${item.zip_code}`;
-
-    const uiProperty: Property = {
-      id: item.property_id,
-      title: `${item.property_type.charAt(0).toUpperCase() + item.property_type.slice(1)} in ${item.address.city}`,
-      address: formattedAddress,
-      price: item.price,
-      facts: [
-        `${item.bedrooms} bedrooms`,
-        `${item.bathrooms} bathrooms`,
-        `${item.square_feet.toLocaleString()} sq. ft.`,
-      ],
-      imageUrl: item.image_url || "/window.svg",
-      imageAlt: item.description,
-      href: `#${item.property_id}`,
-      badge: item.listing_status.toUpperCase(),
-    };
-
-    return uiProperty;
-  })
-  .filter((item): item is Property => item !== null);
-
-export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 px-4 py-8 md:px-8 max-w-7xl mx-auto">
+    <main className="mx-auto min-h-screen max-w-7xl bg-slate-50 px-4 py-8 text-slate-900 md:px-8">
       <header className="mb-8">
-        <h1 className="text-4xl font-bold tracking-tight">Neighborhood Listing Platform</h1>
+        <h1 className="text-4xl font-bold tracking-tight">
+          Neighborhood Listing Platform
+        </h1>
         <p className="mt-2 text-slate-600">
-          Find homes, explore verified listings, and connect with organizations serving the neighborhood.
+          Find homes and explore approved neighborhood listings.
         </p>
       </header>
 
@@ -64,29 +71,36 @@ export default function Home() {
       </section>
 
       <section className="mt-12" aria-labelledby="listings-heading">
-        <div className="mb-6 flex items-end justify-between gap-4">
-          <div>
-            <p className="font-semibold text-blue-700">Available now</p>
-            <h2 id="listings-heading" className="text-3xl font-bold">
-              Featured properties
-            </h2>
-          </div>
-          <p className="text-sm text-slate-600">{validatedProperties.length} listings</p>
-        </div>
+        <header className="mb-6">
+          <h2 id="listings-heading" className="text-3xl font-bold">
+            Featured properties
+          </h2>
+          {!loadFailed && (
+            <p className="mt-2 text-sm text-slate-600">
+              {properties.length} approved listings
+            </p>
+          )}
+        </header>
 
-        {validatedProperties.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {validatedProperties.map((property) => (
+        {loadFailed ? (
+          <p role="alert" className="rounded-xl bg-white p-6 text-red-700">
+            Unable to load listings. Please try again later.
+          </p>
+        ) : properties.length > 0 ? (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {properties.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
         ) : (
-          <div className="p-8 text-center bg-white rounded-xl shadow-sm border border-slate-200">
-            <p className="text-slate-600">No valid listings available at this time.</p>
-          </div>
+          <p className="rounded-xl bg-white p-6 text-slate-600">
+            No approved listings are available yet.
+          </p>
         )}
       </section>
-<ListingDraftForm />
+
+      <ListingDraftForm />
+
       <section className="mt-12" id="sponsor">
         <SponsorBanner sponsor={sponsor} />
       </section>
@@ -99,7 +113,7 @@ export default function Home() {
           Accessible property assistance
         </h2>
         <p className="mt-3 text-slate-600">
-          Use your browser&apos;s voice tools or keyboard navigation to explore listings and reach every search control and property link.
+          Use keyboard navigation to reach the search controls and property links.
         </p>
       </section>
     </main>
