@@ -23,6 +23,23 @@ export default async function Home() {
   try {
     const supabase = createSupabaseServer();
 
+    const [
+  { data: sponsors, error: sponsorError },
+  { data: sponsorLinks, error: linkError },
+] = await Promise.all([
+  supabase
+    .from("sponsors")
+    .select("id,name,tier")
+    .eq("active_status", true),
+  supabase
+    .from("property_sponsors")
+    .select("property_id,sponsor_id"),
+]);
+
+if (sponsorError || linkError) {
+  throw new Error("Unable to load property sponsors.");
+}
+
     const { data, error } = await supabase
       .from("properties")
       .select("id,address,price,bedrooms,bathrooms,square_feet")
@@ -46,7 +63,23 @@ export default async function Home() {
         imageUrl: "/window.svg",
         imageAlt: "Illustration of a window",
         href: `#${item.id}`,
-        badge: "APPROVED",
+        
+      badge: "APPROVED",
+      sponsors: (sponsorLinks ?? [])
+  .filter((link) => link.property_id === item.id)
+  .flatMap((link) => {
+    const sponsor = (sponsors ?? []).find(
+      (entry) => entry.id === link.sponsor_id
+    );
+
+    return sponsor
+      ? [{
+          id: sponsor.id,
+          name: sponsor.name,
+          tier: sponsor.tier,
+        }]
+      : [];
+  }),
       }));
     }
   } catch (error) {

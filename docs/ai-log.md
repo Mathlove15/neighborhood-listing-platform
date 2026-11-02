@@ -289,3 +289,29 @@ Associated implementation commit: f5c140d.
 - I verified the approved listing loaded and submitted a test inquiry.
 - A SQL query confirmed the deployed inquiry was saved in Supabase.
 - Diagnostic logging commit: eb2cc4d.
+
+## Final Rubric Follow-up — November 2, 2026
+
+Tool used: ChatGPT.
+
+ChatGPT provided code and placement instructions to display each
+property's linked active sponsors and tiers, add a server-only
+administrator client, and update the setup documentation.
+
+I applied the changes manually. I corrected an accidental deletion
+of the sponsor mapping with ChatGPT's guidance.
+
+Human verification:
+- Ran npm run build successfully after the sponsor changes.
+- Confirmed the active sponsor and bronze tier appeared locally.
+- Ran a separate read-only administrator connection check successfully.
+- Confirmed .env.local is ignored by Git.
+- Tested visible keyboard focus, Tab, Shift+Tab, Enter, and Space.
+
+Retained the existing public/authenticated client for user requests
+because using the administrator client there would bypass RLS.
+
+The administrator connection check tested the configured key directly;
+it did not execute the new createSupabaseAdmin() helper.
+
+Associated commit: to be recorded after committing these changes.

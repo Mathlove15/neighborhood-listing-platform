@@ -106,3 +106,15 @@ and two-owner isolation checks previously listed as outstanding.
 - A separate SQL query confirmed the inquiry was saved in Supabase.
 - Email notifications are not implemented.
 - Diagnostic logging commit: eb2cc4d.
+
+## Final Checks — November 2, 2026
+
+- The local property card displayed its linked active sponsor and bronze tier.
+- The production build passed after the sponsor display changes.
+- Added createSupabaseAdmin() in the server-only Supabase module.
+- A separate read-only connection check using the configured service-role key passed.
+- git check-ignore confirmed that .env.local is ignored.
+- Manually verified visible keyboard focus on fields and buttons.
+- Enter opened the inquiry form; Space closed it.
+- Tab and Shift+Tab moved forward and backward through the controls.
+- These were manual checks, not a full accessibility audit.

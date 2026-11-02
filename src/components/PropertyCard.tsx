@@ -112,6 +112,18 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             </li>
           ))}
         </ul>
+        {property.sponsors && property.sponsors.length > 0 && (
+  <section className="mt-4" aria-label="Property sponsors">
+    <p className="font-semibold">Sponsored by</p>
+    <ul className="mt-2 space-y-1">
+      {property.sponsors.map((sponsor) => (
+        <li key={sponsor.id}>
+          {sponsor.name} — {sponsor.tier} tier
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
 
         <button
           type="button"

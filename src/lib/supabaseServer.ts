@@ -22,3 +22,21 @@ export function createSupabaseServer(accessToken?: string) {
     },
   });
 }
+
+// For trusted administrator operations on the server only.
+export function createSupabaseAdmin() {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    throw new Error("Supabase administrator settings are missing.");
+  }
+
+  return createClient(url, key, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  });
+}
