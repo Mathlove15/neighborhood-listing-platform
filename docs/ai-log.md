@@ -282,3 +282,10 @@ AI assistance: ChatGPT, GPT-6.1 Sol Medium.
 
 Associated implementation commit: f5c140d.
 
+## Deployment Troubleshooting — November 2, 2026
+
+- ChatGPT helped add error logging and identify an invalid Supabase URL in Vercel.
+- I corrected the Preview setting and redeployed.
+- I verified the approved listing loaded and submitted a test inquiry.
+- A SQL query confirmed the deployed inquiry was saved in Supabase.
+- Diagnostic logging commit: eb2cc4d.

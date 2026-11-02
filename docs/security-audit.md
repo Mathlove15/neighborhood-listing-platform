@@ -96,3 +96,13 @@ and two-owner isolation checks previously listed as outstanding.
   375, 768, and 1280 pixels.
 - The visible property card and inquiry controls fit within their containers.
 - These were manual checks, not a full accessibility audit.
+
+## Deployed Preview Verification — November 2, 2026
+
+- Corrected an invalid SUPABASE_URL in Vercel and redeployed.
+- The deployed Preview displayed the approved Maple Street listing.
+- Submitted a fictional inquiry through the deployed website.
+- The website showed a success confirmation.
+- A separate SQL query confirmed the inquiry was saved in Supabase.
+- Email notifications are not implemented.
+- Diagnostic logging commit: eb2cc4d.
