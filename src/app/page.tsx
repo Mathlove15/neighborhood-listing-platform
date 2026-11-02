@@ -30,6 +30,7 @@ export default async function Home() {
       .order("created_at", { ascending: false });
 
     if (error) {
+      console.error("Listing query failed:", error.code, error.message);
       loadFailed = true;
     } else {
       properties = (data ?? []).map((item) => ({
@@ -48,9 +49,13 @@ export default async function Home() {
         badge: "APPROVED",
       }));
     }
-  } catch {
-    loadFailed = true;
-  }
+  } catch (error) {
+  console.error(
+    "Listing connection failed:",
+    error instanceof Error ? error.message : "Unknown error"
+  );
+  loadFailed = true;
+}
 
   return (
     <main className="mx-auto min-h-screen max-w-7xl bg-slate-50 px-4 py-8 text-slate-900 md:px-8">
