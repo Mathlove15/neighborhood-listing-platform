@@ -61,3 +61,38 @@ Tested locally on November 1, 2026:
 - Corrected its price to 1400 using the SQL Editor.
 - Refreshed the homepage: only the approved Maple Street listing appeared.
 - The Pine Street browser-test draft remains in the database.
+
+## Additional SQL Verification — November 1, 2026
+
+- Anonymous sponsor access returned 1 sponsor and 1 sponsor link,
+  matching the expected fictional test data.
+- Owner self-approval was blocked with error 42501:
+  new row violates row-level security policy for properties.
+  ROLLBACK was run afterward.
+- Temporarily assigned the second test user the property_owner role.
+  That user saw 0 rows for the first owner's tested draft and
+  changed 0 listings.
+- The second-owner test was rolled back, restoring the original
+  profile role and leaving listing data unchanged.
+
+These checks complete the sponsor visibility, owner self-approval,
+and two-owner isolation checks previously listed as outstanding.
+
+## Inquiry Browser Verification — November 1, 2026
+
+- Opened the Maple Street inquiry form using Contact owner.
+- Submitted a fictional inquiry as visitor@example.com without signing in.
+- The website displayed a success confirmation.
+- A separate SQL query confirmed the email, message, and property ID
+  were saved in Supabase.
+- The test inquiry remains in the database.
+- This feature saves inquiries; it does not send email notifications.
+
+## Keyboard and Layout Checks — November 2, 2026
+
+- Keyboard navigation showed visible focus on the inquiry email field,
+  message field, and Send inquiry button.
+- Inspected the page in Chrome's responsive preview at widths of
+  375, 768, and 1280 pixels.
+- The visible property card and inquiry controls fit within their containers.
+- These were manual checks, not a full accessibility audit.

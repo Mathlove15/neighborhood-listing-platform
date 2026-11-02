@@ -254,3 +254,30 @@ checks still need review. Earlier accessibility scores do not verify
 the updated website.
 
 Associated implementation commit: 95478cd.
+
+## Follow-up Verification — November 1–2, 2026
+
+AI assistance: ChatGPT, GPT-6.1 Sol Medium.
+
+### Assistance Used
+- Guided additional SQL security tests.
+- Helped implement the inquiry API and property-card inquiry form.
+- Explained build results, keyboard navigation, and responsive previews.
+
+### Human Verification
+- Anonymous access returned 1 active sponsor and 1 sponsor link.
+- Owner self-approval was blocked by row-level security.
+- A second property owner could not see or update the tested owner's draft.
+- Temporary SQL test changes were rolled back.
+- Submitted a fictional inquiry through the website without signing in.
+- A separate SQL query confirmed the inquiry was saved in Supabase.
+- npm run build passed and included /api/inquiries.
+- Inquiry fields and the submit button showed visible keyboard focus.
+- Inspected layouts at widths of 375, 768, and 1280 pixels.
+
+### Limits
+- Inquiries are saved in the database; email notifications are not implemented.
+- Manual layout and keyboard checks are not a full accessibility audit.
+- Deployment and final submission checks remain.
+
+Associated implementation commit: pending.
