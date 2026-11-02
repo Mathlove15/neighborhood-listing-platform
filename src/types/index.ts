@@ -8,6 +8,11 @@ export interface Property {
   imageAlt: string;
   href: string;
   badge?: string;
+    sponsors?: {
+    id: string;
+    name: string;
+    tier: string;
+  }[];
 }
 
 export interface Sponsor {

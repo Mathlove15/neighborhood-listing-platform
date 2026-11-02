@@ -145,3 +145,173 @@ Drafts are saved locally in the browser. Sample property image URLs remain place
 
 - PR: https://github.com/Mathlove15/neighborhood-listing-platform/pull/15
 - MVP plan: `docs/mvp-plan.md`
+
+## Midterm Practical — October 29, 2026
+
+Tool: ChatGPT.
+Exact user prompt: "Lets do whats do by 2:55"
+Goal: Prepare the required in-class progress submission.
+
+| Step / Tool | Prompt Summary | Model Output Used | Model Output Rejected & Rationale | Verification Method | Associated Git Commit |
+| --- | --- | --- | --- | --- | --- |
+| Repository access / ChatGPT | Guide me through the midterm setup. | Opened repository collaborator settings. | None. | GitHub shows pdt605 has a pending invitation; acceptance is not yet confirmed. | Not applicable: GitHub setting. |
+| Branch setup / ChatGPT | Prepare the progress check. | Saved unfinished Lab 5 changes with git stash and created exam/practical-persistence-eval. | None. | Terminal confirmed the stash was saved and the exam branch was created. | Pending. |
+| Environment hygiene / ChatGPT | Review the uploaded .gitignore screenshot. | Kept existing environment exclusions and added dist/. | None. | Reviewed .gitignore and git status; no credential files appeared in the status output. | Pending. |
+
+### Remaining Work
+
+Requirements, exam migration, access policies, security tests, API validation, and accessible UI still require implementation or verification against the exam instructions. No exam test results are claimed yet.
+
+## Midterm Practical — November 1, 2026
+
+Tool/model: ChatGPT — GPT-6.1 Sol, Medium, as displayed in the chat.
+
+This entry updates the October 29 progress report. Earlier lab results
+describe earlier versions and do not verify the current implementation.
+
+### Prompts and Assistance
+
+Exact user messages from this session included:
+
+- "Before we proceed. Explain to me in simpler terms, what im actually doing on Supabase right now?"
+- "npm audit fix means?"
+- "Once I type it in the terminal, where does it fix it?"
+- "Lets change 1399.92."
+
+Other requests were short instructions to proceed, uploaded code, and
+screenshots of results. The following descriptions summarize those
+interactions; they are not exact prompt quotations.
+
+ChatGPT provided step-by-step guidance and code for requirements,
+the database migration, access policies, SQL security tests,
+Zod validation, the Supabase server connection, API routes,
+website sign-in, and the database-backed listing form.
+
+### Output Used and Technical Decisions
+
+- Created docs/requirements.md and the versioned exam migration.
+- Applied the migration in Supabase and recorded SQL security checks
+  in docs/security-audit.md.
+- Added a strict Zod schema in src/schemas/property.ts.
+  It rejects invalid values and unexpected fields such as status.
+- Added a server-only Supabase helper using environment settings.
+- Added GET and POST handlers in /api/properties.
+  POST verifies the user and assigns ownership on the server.
+- Replaced homepage JSON listings with approved Supabase records.
+- Added /api/auth/sign-in and connected ListingDraftForm to the API.
+- Kept the form's access token in memory. Refreshing clears the
+  form's sign-in state.
+- Updated Next.js to 16.4.3 following the local npm audit report.
+
+### Suggestions Not Applied and Corrections
+
+- Did not apply the suggested GRANT SELECT for anonymous inquiry
+  access. Permission denied was the expected security-test result.
+- Did not use npm audit fix --force. The report proposed changes
+  outside existing version limits, including a breaking ESLint change.
+- Changed the other-user update test to return a count because
+  the earlier displayed result showed the identity setup value.
+  The revised test clearly returned listings_changed = 0.
+- Replaced the old browser-storage form because it did not save
+  records in Supabase.
+- Updated outdated audit wording after local API testing.
+- Corrected the browser-test draft price from 1399.92 to 1400
+  through the Supabase SQL Editor.
+
+### Human Verification
+
+I entered and ran the commands, saved the files, reviewed the results,
+and shared screenshots for review.
+
+Observed results:
+
+- Row-level security was enabled on all five tables.
+- Anonymous access returned the approved listing and denied inquiry reads.
+- A visitor inquiry insert succeeded inside a rolled-back test.
+- The owner could read and edit their draft.
+- The tested other user changed zero draft listings.
+- The owner could read the property's inquiry; the sender saw zero.
+- The trusted service role could update a listing and read inquiries.
+- The owner changed zero already-approved listings.
+- GET /api/properties returned the approved Maple Street listing.
+- Invalid POST data returned 400; valid data without a token returned 401.
+- An authenticated POST returned 201 and status draft.
+  That API-test draft was deleted afterward.
+- Website sign-in and draft submission succeeded.
+- A separate SQL query confirmed the browser-test Pine Street draft.
+  That draft remains in Supabase.
+- Refreshing the homepage showed only the approved Maple Street listing.
+- The latest npm run build passed with the homepage,
+  /api/auth/sign-in, and /api/properties.
+- The dependency report after updates showed 16 moderate vulnerabilities.
+  No claim of zero vulnerabilities is made.
+
+### Remaining Verification
+
+Sponsor visibility, owner self-approval, isolation between two property
+owners, current UI accessibility, deployment, and final submission
+checks still need review. Earlier accessibility scores do not verify
+the updated website.
+
+Associated implementation commit: 95478cd.
+
+## Follow-up Verification — November 1–2, 2026
+
+AI assistance: ChatGPT, GPT-6.1 Sol Medium.
+
+### Assistance Used
+- Guided additional SQL security tests.
+- Helped implement the inquiry API and property-card inquiry form.
+- Explained build results, keyboard navigation, and responsive previews.
+
+### Human Verification
+- Anonymous access returned 1 active sponsor and 1 sponsor link.
+- Owner self-approval was blocked by row-level security.
+- A second property owner could not see or update the tested owner's draft.
+- Temporary SQL test changes were rolled back.
+- Submitted a fictional inquiry through the website without signing in.
+- A separate SQL query confirmed the inquiry was saved in Supabase.
+- npm run build passed and included /api/inquiries.
+- Inquiry fields and the submit button showed visible keyboard focus.
+- Inspected layouts at widths of 375, 768, and 1280 pixels.
+
+### Limits
+- Inquiries are saved in the database; email notifications are not implemented.
+- Manual layout and keyboard checks are not a full accessibility audit.
+- Deployment and final submission checks remain.
+
+Associated implementation commit: f5c140d.
+
+## Deployment Troubleshooting — November 2, 2026
+
+- ChatGPT helped add error logging and identify an invalid Supabase URL in Vercel.
+- I corrected the Preview setting and redeployed.
+- I verified the approved listing loaded and submitted a test inquiry.
+- A SQL query confirmed the deployed inquiry was saved in Supabase.
+- Diagnostic logging commit: eb2cc4d.
+
+## Final Rubric Follow-up — November 2, 2026
+
+Tool used: ChatGPT.
+
+ChatGPT provided code and placement instructions to display each
+property's linked active sponsors and tiers, add a server-only
+administrator client, and update the setup documentation.
+
+I applied the changes manually. I corrected an accidental deletion
+of the sponsor mapping with ChatGPT's guidance.
+
+Human verification:
+- Ran npm run build successfully after the sponsor changes.
+- Confirmed the active sponsor and bronze tier appeared locally.
+- Ran a separate read-only administrator connection check successfully.
+- Confirmed .env.local is ignored by Git.
+- Tested visible keyboard focus, Tab, Shift+Tab, Enter, and Space.
+
+Retained the existing public/authenticated client for user requests
+because using the administrator client there would bypass RLS.
+
+The administrator connection check tested the configured key directly;
+it did not execute the new createSupabaseAdmin() helper.
+
+Associated implementation commit: bab1ef6.
