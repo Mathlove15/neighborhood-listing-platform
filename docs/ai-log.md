@@ -280,4 +280,5 @@ AI assistance: ChatGPT, GPT-6.1 Sol Medium.
 - Manual layout and keyboard checks are not a full accessibility audit.
 - Deployment and final submission checks remain.
 
-Associated implementation commit: pending.
+Associated implementation commit: f5c140d.
+
