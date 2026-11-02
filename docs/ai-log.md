@@ -314,4 +314,4 @@ because using the administrator client there would bypass RLS.
 The administrator connection check tested the configured key directly;
 it did not execute the new createSupabaseAdmin() helper.
 
-Associated commit: to be recorded after committing these changes.
+Associated implementation commit: bab1ef6.
