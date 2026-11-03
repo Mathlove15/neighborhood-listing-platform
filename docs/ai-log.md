@@ -145,3 +145,48 @@ Drafts are saved locally in the browser. Sample property image URLs remain place
 
 - PR: https://github.com/Mathlove15/neighborhood-listing-platform/pull/15
 - MVP plan: `docs/mvp-plan.md`
+
+## Lab 5: Database Setup and Row-Level Security
+
+- Author: Charles Braden
+- Work completed: October 28–29, 2026
+- Entry recorded: November 3, 2026
+- Tools: Google Gemini / AI Studio and ChatGPT
+
+### Prompt Summary
+
+I asked Gemini for a PostgreSQL schema for profiles, properties,
+sponsors, property_sponsors, and inquiries. I asked ChatGPT to
+guide me through reviewing the SQL, creating migrations, adding
+fictional data, configuring access policies, and testing permissions.
+
+### Output Used and Corrections
+
+I used the proposed table structure and reviewed its relationships
+and constraints. I added nonblank text checks and enabled row-level
+security on all five tables. Separate access policies restrict
+public reads and owner updates. Credentials were kept out of
+the committed configuration.
+
+### Human Verification
+
+I applied the table migration, access-policy migration, and fictional
+seed data in the development project. I ran tests/rls_tests.sql:
+all 16 checks passed for visitor, owner, other-user, and service-role
+access. The tests rolled back their changes.
+
+A clean-environment migration rebuild has not yet been verified.
+
+### Related Commits
+
+- 58d9712: Database design documentation
+- fa45a89: Tables and row-level security
+- ec9d2a2: Fictional sample data
+- 3ad71f3: Database access policies
+- b98c89d: Row-level security tests
+
+### Partner Handoff Plan
+
+Charles leads the database portion. Diana will lead the server
+routes and webpage integration. Charles will test and review her
+work. Each partner will record their actual contributions.
