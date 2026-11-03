@@ -175,7 +175,12 @@ seed data in the development project. I ran tests/rls_tests.sql:
 all 16 checks passed for visitor, owner, other-user, and service-role
 access. The tests rolled back their changes.
 
-A clean-environment migration rebuild has not yet been verified.
+On November 3, 2026, I verified a clean rebuild in the separate
+lab5-rebuild-test Supabase project. I applied migrations
+001_create_tables.sql and 002_access_policies.sql, created the
+two fictional authentication users, and ran supabase/seed.sql.
+All scripts succeeded, and all 16 checks in tests/rls_tests.sql
+passed.
 
 ### Related Commits
 
