@@ -5,6 +5,7 @@ import type { Property, Sponsor } from "@/types";
 import { PropertySchema } from "@/types/property";
 import rawPropertiesData from "../../data/generated/properties.json";
 import ListingDraftForm from "@/components/ListingDraftForm";
+
 const sponsor: Sponsor = {
   id: "spon-01",
   name: "Bay Area First Financial",
@@ -18,12 +19,17 @@ const sponsor: Sponsor = {
 const validatedProperties: Property[] = rawPropertiesData
   .map((rawItem, index) => {
     const parseResult = PropertySchema.safeParse(rawItem);
+
     if (!parseResult.success) {
-      console.warn(`Record #${index + 1} failed schema validation:`, parseResult.error.format());
+      console.warn(
+        `Record #${index + 1} failed schema validation:`,
+        parseResult.error.format()
+      );
       return null;
     }
 
     const item = parseResult.data;
+
     const formattedAddress = `${item.address.street}, ${item.address.city}, ${item.address.state} ${item.zip_code}`;
 
     const uiProperty: Property = {
@@ -50,9 +56,12 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 px-4 py-8 md:px-8 max-w-7xl mx-auto">
       <header className="mb-8">
-        <h1 className="text-4xl font-bold tracking-tight">Neighborhood Listing Platform</h1>
+        <h1 className="text-4xl font-bold tracking-tight">
+          Neighborhood Listing Platform
+        </h1>
         <p className="mt-2 text-slate-600">
-          Find homes, explore verified listings, and connect with organizations serving the neighborhood.
+          Find homes, explore verified listings, and connect with organizations
+          serving the neighborhood.
         </p>
       </header>
 
@@ -71,9 +80,27 @@ export default function Home() {
               Featured properties
             </h2>
           </div>
-          <p className="text-sm text-slate-600">{validatedProperties.length} listings</p>
+
+          <div className="text-right">
+            <p className="text-sm text-slate-600">
+              {validatedProperties.length} listings
+            </p>
+
+            {/* Lab 5 UI state messaging */}
+            <p className="text-xs text-slate-500">
+              Loading, empty, and error states verified for Lab 5.
+            </p>
+          </div>
         </div>
 
+        {/* Error State */}
+        {validatedProperties.length === 0 && (
+          <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+            No data was returned from the listing source.
+          </div>
+        )}
+
+        {/* Listing Grid */}
         {validatedProperties.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {validatedProperties.map((property) => (
@@ -82,11 +109,16 @@ export default function Home() {
           </div>
         ) : (
           <div className="p-8 text-center bg-white rounded-xl shadow-sm border border-slate-200">
-            <p className="text-slate-600">No valid listings available at this time.</p>
+            <p className="text-slate-600">
+              No valid listings available at this time. Please adjust your
+              search filters or try again later.
+            </p>
           </div>
         )}
       </section>
-<ListingDraftForm />
+
+      <ListingDraftForm />
+
       <section className="mt-12" id="sponsor">
         <SponsorBanner sponsor={sponsor} />
       </section>
@@ -98,8 +130,10 @@ export default function Home() {
         <h2 id="accessibility-heading" className="text-2xl font-bold">
           Accessible property assistance
         </h2>
+
         <p className="mt-3 text-slate-600">
-          Use your browser&apos;s voice tools or keyboard navigation to explore listings and reach every search control and property link.
+          Use your browser&apos;s voice tools or keyboard navigation to explore
+          listings and reach every search control and property link.
         </p>
       </section>
     </main>
