@@ -1,10 +1,26 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { z } from "zod";
 import PropertyCard from "@/components/PropertyCard";
 import SearchFilters from "@/components/SearchFilters";
 import SponsorBanner from "@/components/SponsorBanner";
-import type { Property, Sponsor } from "@/types";
-import { PropertySchema } from "@/types/property";
-import rawPropertiesData from "../../data/generated/properties.json";
 import ListingDraftForm from "@/components/ListingDraftForm";
+import type { Sponsor } from "@/types";
+
+const ListingsResponseSchema = z.object({
+  listings: z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      price: z.number(),
+    })
+  ),
+});
+
+type Listing = z.infer<
+  typeof ListingsResponseSchema
+>["listings"][number];
 
 const sponsor: Sponsor = {
   id: "spon-01",
@@ -15,104 +31,149 @@ const sponsor: Sponsor = {
   tagline: "Helping families find home financing that fits.",
 };
 
-// Safe runtime validation: validate each item and filter out invalid records
-const validatedProperties: Property[] = rawPropertiesData
-  .map((rawItem, index) => {
-    const parseResult = PropertySchema.safeParse(rawItem);
+export default function Home() {
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [attempt, setAttempt] = useState(0);
 
-    if (!parseResult.success) {
-      console.warn(
-        `Record #${index + 1} failed schema validation:`,
-        parseResult.error.format()
-      );
-      return null;
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadListings() {
+      try {
+        const response = await fetch("/api/properties", {
+          cache: "no-store",
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to load listings. Please try again.");
+        }
+
+        const result = ListingsResponseSchema.safeParse(
+          await response.json()
+        );
+
+        if (!result.success) {
+          throw new Error("The listing information could not be read.");
+        }
+
+        if (!controller.signal.aborted) {
+          setListings(result.data.listings);
+          setError("");
+        }
+      } catch (caught) {
+        if (!controller.signal.aborted) {
+          setError(
+            caught instanceof Error
+              ? caught.message
+              : "Unable to load listings."
+          );
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
+      }
     }
 
-    const item = parseResult.data;
+    void loadListings();
 
-    const formattedAddress = `${item.address.street}, ${item.address.city}, ${item.address.state} ${item.zip_code}`;
+    return () => controller.abort();
+  }, [attempt]);
 
-    const uiProperty: Property = {
-      id: item.property_id,
-      title: `${item.property_type.charAt(0).toUpperCase() + item.property_type.slice(1)} in ${item.address.city}`,
-      address: formattedAddress,
-      price: item.price,
-      facts: [
-        `${item.bedrooms} bedrooms`,
-        `${item.bathrooms} bathrooms`,
-        `${item.square_feet.toLocaleString()} sq. ft.`,
-      ],
-      imageUrl: item.image_url || "/window.svg",
-      imageAlt: item.description,
-      href: `#${item.property_id}`,
-      badge: item.listing_status.toUpperCase(),
-    };
+  function retry() {
+    setLoading(true);
+    setError("");
+    setAttempt((current) => current + 1);
+  }
 
-    return uiProperty;
-  })
-  .filter((item): item is Property => item !== null);
-
-export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 px-4 py-8 md:px-8 max-w-7xl mx-auto">
+    <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-900 md:px-8 max-w-7xl
+mx-auto">
       <header className="mb-8">
         <h1 className="text-4xl font-bold tracking-tight">
           Neighborhood Listing Platform
         </h1>
         <p className="mt-2 text-slate-600">
-          Find homes, explore verified listings, and connect with organizations
-          serving the neighborhood.
+          Browse approved property listings and explore neighborhood
+          resources.
         </p>
       </header>
 
-      <section className="mt-10" aria-labelledby="search-heading">
-        <h2 id="search-heading" className="sr-only">
-          Search property listings
-        </h2>
-        <SearchFilters />
-      </section>
+      <SearchFilters />
 
-      <section className="mt-12" aria-labelledby="listings-heading">
-        <div className="mb-6 flex items-end justify-between gap-4">
-          <div>
-            <p className="font-semibold text-blue-700">Available now</p>
-            <h2 id="listings-heading" className="text-3xl font-bold">
-              Featured properties
-            </h2>
-          </div>
+      <section className="mt-8" aria-labelledby="listings-heading">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2
+            id="listings-heading"
+            className="text-2xl font-bold"
+          >
+            Featured properties
+          </h2>
 
-          <div className="text-right">
+          {!loading && !error && (
             <p className="text-sm text-slate-600">
-              {validatedProperties.length} listings
+              {listings.length} listings
             </p>
-
-            {/* Lab 5 UI state messaging */}
-            <p className="text-xs text-slate-500">
-              Loading, empty, and error states verified for Lab 5.
-            </p>
-          </div>
+          )}
         </div>
 
-        {/* Error State */}
-        {validatedProperties.length === 0 && (
-          <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
-            No data was returned from the listing source.
+        {loading && (
+          <p role="status" className="rounded-xl bg-white p-6">
+            Loading listings...
+          </p>
+        )}
+
+        {!loading && error && (
+          <div
+            role="alert"
+            className="rounded-xl border border-red-200 bg-red-50 p-6"
+          >
+            <p>{error}</p>
+            <button
+              type="button"
+              onClick={retry}
+              className="mt-3 min-h-[44px] rounded-md bg-blue-600 px-4 py-2 text-white
+hover:bg-blue-700"
+            >
+              Try again
+            </button>
           </div>
         )}
 
-        {/* Listing Grid */}
-        {validatedProperties.length > 0 ? (
+        {!loading && !error && listings.length === 0 && (
+          <p
+            role="status"
+            className="rounded-xl border border-slate-200 bg-white p-8 text-center text-slate-600"
+          >
+            No approved listings are available at this time.
+          </p>
+        )}
+
+        {!loading && !error && listings.length > 0 && (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {validatedProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
+            {listings.map((listing) => (
+              <div
+                key={listing.id}
+                id={"listing-" + listing.id}
+              >
+                <PropertyCard
+                  property={{
+                    id: listing.id,
+                    title: listing.title,
+                    price: listing.price,
+                    address: "Address not provided",
+                    facts: [],
+                    imageUrl: "/window.svg",
+                    imageAlt: "Property illustration",
+                    href: "#listing-" + listing.id,
+                    badge: "APPROVED",
+                  }}
+                />
+              </div>
             ))}
-          </div>
-        ) : (
-          <div className="p-8 text-center bg-white rounded-xl shadow-sm border border-slate-200">
-            <p className="text-slate-600">
-              No valid listings available at this time. Please adjust your
-              search filters or try again later.
-            </p>
           </div>
         )}
       </section>
@@ -127,13 +188,15 @@ export default function Home() {
         className="mt-12 rounded-xl bg-white p-6 shadow-md"
         aria-labelledby="accessibility-heading"
       >
-        <h2 id="accessibility-heading" className="text-2xl font-bold">
+        <h2
+          id="accessibility-heading"
+          className="text-2xl font-bold"
+        >
           Accessible property assistance
         </h2>
-
         <p className="mt-3 text-slate-600">
-          Use your browser&apos;s voice tools or keyboard navigation to explore
-          listings and reach every search control and property link.
+          Use your browser&apos;s voice tools or keyboard navigation
+          to explore listings and reach the page controls.
         </p>
       </section>
     </main>

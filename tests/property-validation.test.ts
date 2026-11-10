@@ -34,7 +34,8 @@ test("Case 1: Valid property record passes schema validation", () => {
 });
 
 test("Case 2: Invalid fixture - missing ID fails validation", () => {
-  const { property_id, ...invalidRecord } = baseValidRecord;
+  const invalidRecord: Partial<typeof baseValidRecord> = { ...baseValidRecord };
+  delete invalidRecord.property_id;
   const result = PropertySchema.safeParse(invalidRecord);
   assert.equal(result.success, false, "Missing property_id must fail schema");
 });
