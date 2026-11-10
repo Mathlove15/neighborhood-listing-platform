@@ -145,3 +145,65 @@ Drafts are saved locally in the browser. Sample property image URLs remain place
 
 - PR: https://github.com/Mathlove15/neighborhood-listing-platform/pull/15
 - MVP plan: `docs/mvp-plan.md`
+
+## Lab 5: Database Setup and Row-Level Security
+
+- Author: Charles Braden
+- Work completed: October 28–29, 2026
+- Entry recorded: November 3, 2026
+- Tools: Google Gemini / AI Studio and ChatGPT
+
+### Prompt Summary
+
+I asked Gemini for a PostgreSQL schema for profiles, properties,
+sponsors, property_sponsors, and inquiries. I asked ChatGPT to
+guide me through reviewing the SQL, creating migrations, adding
+fictional data, configuring access policies, and testing permissions.
+
+### Output Used and Corrections
+
+I used the proposed table structure and reviewed its relationships
+and constraints. I added nonblank text checks and enabled row-level
+security on all five tables. Separate access policies restrict
+public reads and owner updates. Credentials were kept out of
+the committed configuration.
+
+### Human Verification
+
+I applied the table migration, access-policy migration, and fictional
+seed data in the development project. I ran tests/rls_tests.sql:
+all 16 checks passed for visitor, owner, other-user, and service-role
+access. The tests rolled back their changes.
+
+On November 3, 2026, I verified a clean rebuild in the separate
+lab5-rebuild-test Supabase project. I applied migrations
+001_create_tables.sql and 002_access_policies.sql, created the
+two fictional authentication users, and ran supabase/seed.sql.
+All scripts succeeded, and all 16 checks in tests/rls_tests.sql
+passed.
+
+### Related Commits
+
+- 58d9712: Database design documentation
+- fa45a89: Tables and row-level security
+- ec9d2a2: Fictional sample data
+- 3ad71f3: Database access policies
+- b98c89d: Row-level security tests
+
+### Partner Handoff Plan
+
+Charles leads the database portion. Diana will lead the server
+routes and webpage integration. Charles will test and review her
+work. Each partner will record their actual contributions.
+
+## Lab 5: API and database-backed form integration
+
+- Tool: ChatGPT. The earlier Gemini/AI Studio schema consultation is recorded above.
+- Prompt summary: resume Lab 5 with Diana, review the working files, fix lint errors, connect the draft form to the validated API, and check the remaining assignment requirements efficiently.
+- Used: authenticated sign-in route, title/price form matching the database, owner draft POST/PATCH flow, validation and safe messages, unit-test warning fix, and staged-file whitespace cleanup.
+- Rejected/corrected: browser storage alone did not demonstrate database persistence; replaced that form flow. Removed old fields the minimal API could not persist. Kept the privileged service-role key out of ordinary routes. Corrected an earlier wrong-project connection and invalid publishable-key input rather than disabling policies.
+- Verification: observed lint, six unit tests, production build and all sixteen API checks pass. Partners tested browser creation at 1500, editing to 1600, negative-price validation, sign-out and public exclusion.
+- Commit: 402f049. New browser-state and secret-scan files require their own observed results before being described as passed.
+- Further ChatGPT review: existing docs/migrations/seed/RLS tests were inspected. The SQL suite assumes a clean seed; retain the earlier clean rebuild evidence. Prepared read-state browser tests and a redacted Git-history scan for the remaining checklist.
+
+- Follow-up verification: all 3 browser-state tests passed. Corrected ambiguous alert selectors that also matched the Next.js route announcer. Final lint and build passed.
