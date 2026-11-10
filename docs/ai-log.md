@@ -195,3 +195,15 @@ passed.
 Charles leads the database portion. Diana will lead the server
 routes and webpage integration. Charles will test and review her
 work. Each partner will record their actual contributions.
+
+## Lab 5: API and database-backed form integration
+
+- Tool: ChatGPT. The earlier Gemini/AI Studio schema consultation is recorded above.
+- Prompt summary: resume Lab 5 with Diana, review the working files, fix lint errors, connect the draft form to the validated API, and check the remaining assignment requirements efficiently.
+- Used: authenticated sign-in route, title/price form matching the database, owner draft POST/PATCH flow, validation and safe messages, unit-test warning fix, and staged-file whitespace cleanup.
+- Rejected/corrected: browser storage alone did not demonstrate database persistence; replaced that form flow. Removed old fields the minimal API could not persist. Kept the privileged service-role key out of ordinary routes. Corrected an earlier wrong-project connection and invalid publishable-key input rather than disabling policies.
+- Verification: observed lint, six unit tests, production build and all sixteen API checks pass. Partners tested browser creation at 1500, editing to 1600, negative-price validation, sign-out and public exclusion.
+- Commit: 402f049. New browser-state and secret-scan files require their own observed results before being described as passed.
+- Further ChatGPT review: existing docs/migrations/seed/RLS tests were inspected. The SQL suite assumes a clean seed; retain the earlier clean rebuild evidence. Prepared read-state browser tests and a redacted Git-history scan for the remaining checklist.
+
+- Follow-up verification: all 3 browser-state tests passed. Corrected ambiguous alert selectors that also matched the Next.js route announcer. Final lint and build passed.
