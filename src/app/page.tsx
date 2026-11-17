@@ -1,34 +1,38 @@
 import PropertyCard from "@/components/PropertyCard";
 import SearchFilters from "@/components/SearchFilters";
 import SponsorBanner from "@/components/SponsorBanner";
-import type { Property, Sponsor } from "@/types";
-import { PropertySchema } from "@/types/property";
-import rawPropertiesData from "../../data/generated/properties.json";
 import ListingDraftForm from "@/components/ListingDraftForm";
-const sponsor: Sponsor = {
-  id: "spon-01",
-  name: "Bay Area First Financial",
-  imageUrl: "/window.svg",
-  imageAlt: "Bay Area First Financial logo",
-  href: "#sponsor",
-  tagline: "Helping families find home financing that fits.",
-};
+import type { Property } from "@/types";
+import { PropertySchema } from "@/types/property";
+import { selectSponsor } from "@/lib/sponsor-matching";
+import { sponsorCampaigns } from "@/lib/sponsor-campaigns";
+import rawPropertiesData from "../../data/generated/properties.json";
 
-// Safe runtime validation: validate each item and filter out invalid records
+export const dynamic = "force-dynamic";
+
+// Validate records before displaying them.
 const validatedProperties: Property[] = rawPropertiesData
   .map((rawItem, index) => {
     const parseResult = PropertySchema.safeParse(rawItem);
+
     if (!parseResult.success) {
-      console.warn(`Record #${index + 1} failed schema validation:`, parseResult.error.format());
+      console.warn(
+        `Record #${index + 1} failed schema validation:`,
+        parseResult.error.format(),
+      );
       return null;
     }
 
     const item = parseResult.data;
-    const formattedAddress = `${item.address.street}, ${item.address.city}, ${item.address.state} ${item.zip_code}`;
+    const formattedAddress =
+      `${item.address.street}, ${item.address.city}, ` +
+      `${item.address.state} ${item.zip_code}`;
 
     const uiProperty: Property = {
       id: item.property_id,
-      title: `${item.property_type.charAt(0).toUpperCase() + item.property_type.slice(1)} in ${item.address.city}`,
+      title:
+        `${item.property_type.charAt(0).toUpperCase()}` +
+        `${item.property_type.slice(1)} in ${item.address.city}`,
       address: formattedAddress,
       price: item.price,
       facts: [
@@ -47,12 +51,25 @@ const validatedProperties: Property[] = rawPropertiesData
   .filter((item): item is Property => item !== null);
 
 export default function Home() {
+  // Fixed demonstration page ZIP; no personal location is collected.
+  const sponsor = selectSponsor(
+    {
+      zip: "90032",
+      placement: "homepage",
+      now: new Date().toISOString(),
+    },
+    sponsorCampaigns,
+  );
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 px-4 py-8 md:px-8 max-w-7xl mx-auto">
       <header className="mb-8">
-        <h1 className="text-4xl font-bold tracking-tight">Neighborhood Listing Platform</h1>
+        <h1 className="text-4xl font-bold tracking-tight">
+          Neighborhood Listing Platform
+        </h1>
         <p className="mt-2 text-slate-600">
-          Find homes, explore verified listings, and connect with organizations serving the neighborhood.
+          Find homes, explore verified listings, and connect with organizations
+          serving the neighborhood.
         </p>
       </header>
 
@@ -71,7 +88,9 @@ export default function Home() {
               Featured properties
             </h2>
           </div>
-          <p className="text-sm text-slate-600">{validatedProperties.length} listings</p>
+          <p className="text-sm text-slate-600">
+            {validatedProperties.length} listings
+          </p>
         </div>
 
         {validatedProperties.length > 0 ? (
@@ -82,13 +101,24 @@ export default function Home() {
           </div>
         ) : (
           <div className="p-8 text-center bg-white rounded-xl shadow-sm border border-slate-200">
-            <p className="text-slate-600">No valid listings available at this time.</p>
+            <p className="text-slate-600">
+              No valid listings available at this time.
+            </p>
           </div>
         )}
       </section>
-<ListingDraftForm />
+
+      <ListingDraftForm />
+
       <section className="mt-12" id="sponsor">
-        <SponsorBanner sponsor={sponsor} />
+        {sponsor ? (
+          <SponsorBanner sponsor={sponsor} />
+        ) : (
+          <aside className="rounded-xl bg-slate-100 p-6 text-slate-900">
+            <h2 className="text-xl font-bold">Community message</h2>
+            <p>Explore local listings and neighborhood resources.</p>
+          </aside>
+        )}
       </section>
 
       <section
@@ -99,7 +129,8 @@ export default function Home() {
           Accessible property assistance
         </h2>
         <p className="mt-3 text-slate-600">
-          Use your browser&apos;s voice tools or keyboard navigation to explore listings and reach every search control and property link.
+          Use your browser&apos;s voice tools or keyboard navigation to explore
+          listings and reach every search control and property link.
         </p>
       </section>
     </main>

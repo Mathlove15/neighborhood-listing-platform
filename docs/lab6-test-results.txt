@@ -1,0 +1,51 @@
+(node:35862) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/charlesbraden/neighborhood-listing-platform/tests/property-validation.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/charlesbraden/neighborhood-listing-platform/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Case 1: Valid property record passes schema validation (6.610821ms)
+✔ Case 2: Invalid fixture - missing ID fails validation (3.701831ms)
+✔ Case 3: Invalid fixture - negative price fails validation (0.461943ms)
+✔ Case 4: Invalid fixture - bad ZIP code fails validation (0.540751ms)
+✔ Case 5: Invalid fixture - unknown property field fails validation (strict schema) (2.062718ms)
+✔ Case 6: Valid listing with draft status passes validation (0.258256ms)
+(node:35863) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/charlesbraden/neighborhood-listing-platform/tests/sponsor-matching.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/charlesbraden/neighborhood-listing-platform/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Exact ZIP match selects an eligible sponsor (3.494248ms)
+✔ An additional ZIP in the service area also matches (0.290432ms)
+✔ Rejects inactive sponsor (0.178426ms)
+✔ Rejects unapproved sponsor (0.139747ms)
+✔ Rejects wrong placement (0.18555ms)
+✔ Rejects expired campaign (0.136257ms)
+✔ Rejects future campaign (0.130023ms)
+✔ Rejects ZIP outside service area (0.108551ms)
+✔ Rejects invalid date (0.134655ms)
+✔ Rejects reversed dates (0.200159ms)
+✔ Rejects invalid priority (0.179008ms)
+✔ Empty candidates return no match (0.12289ms)
+✔ Malformed ZIP returns no match (0.101139ms)
+✔ Invalid context date returns no match (0.091463ms)
+✔ Campaign start and end times are inclusive (0.14933ms)
+✔ Higher priority wins (0.210544ms)
+✔ Ties use ID consistently regardless of candidate order (0.132468ms)
+✔ Repeated calls return identical results without changing input (2.085168ms)
+✔ Selected display data excludes internal fields (0.285314ms)
+(node:35864) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/charlesbraden/neighborhood-listing-platform/tests/sponsor-redirect.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/charlesbraden/neighborhood-listing-platform/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Approved sponsor redirects to its recorded destination (60.409019ms)
+✔ Unknown sponsor is rejected (2.538457ms)
+✔ Missing sponsor ID is rejected (0.389958ms)
+✔ Duplicate sponsor IDs are rejected (0.360995ms)
+✔ Visitor-supplied redirect destination is rejected (0.888092ms)
+✔ Unsafe destinations and ineligible sponsors are rejected (4.285459ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 397.962568
