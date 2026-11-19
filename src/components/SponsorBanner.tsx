@@ -66,6 +66,7 @@ export default function SponsorBanner({ sponsor }: SponsorBannerProps) {
 
         <a
           href={`/api/sponsors/click?id=${encodeURIComponent(sponsor.id)}`}
+          aria-label={`Visit ${sponsor.name} (sponsored link)`}
           className="mt-3 inline-block text-blue-300 underline"
         >
           Visit sponsor

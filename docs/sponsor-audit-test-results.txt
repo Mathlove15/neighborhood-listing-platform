@@ -1,0 +1,20 @@
+(node:42800) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/charlesbraden/neighborhood-listing-platform/tests/sponsor-audit.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/charlesbraden/neighborhood-listing-platform/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Selected sponsor: Sponsor B
+Valid URL: 302; Location: https://example.com/
+Unsafe URL status: 400
+Exact response body: Destination rejected.
+✔ Teacher example selects B using priority then ID (2.715138ms)
+✔ Pending Sponsor D is excluded before ranking (2.304748ms)
+✔ No eligible sponsor returns null for the fallback UI (0.275459ms)
+✔ URL audit captures a valid redirect and exact unsafe-URL response (78.012966ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 394.300605
